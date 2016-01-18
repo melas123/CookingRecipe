@@ -11,7 +11,7 @@
     %label.control-label.col-sm-6 Email:
     .col-sm-6
       %input.form-control{ ng_model: "user.email", placeholder: "Email ..." , type: "email", name: "email" }
-      %p.help-block{ng_show : "registrationForm.email.$invalid && !registrationForm.email.$pristine"}
+      %p.help-block{ng_show: "registrationForm.email.$invalid && !registrationForm.email.$pristine"}
         Entrer un Email Valide.
   .form-group{ ng_class: "{ 'has-error' : registrationForm.password.$invalid && !registrationForm.password.$pristine }" }
     %label.control-label.col-sm-6 Mot de passe:

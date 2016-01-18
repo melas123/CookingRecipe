@@ -1,10 +1,15 @@
 class IngredientRecipeController < ApplicationController
   before_filter :authenticate_user!, only: [:create, :update, :destroy]
   def create
-    IngredientRecipe.create(recipe_id: params[:recipe_id],
-                                   ingredient_id: params[:ingredient_id],
-                                   quantity: params[:quantity],
-                                   unit: params[:unit])
+    params["_json"].each do |attributes|
+      IngredientRecipe.create( recipe_id:          attributes["recipe_id"],
+                               ingredient_id:      attributes["ingredient_id"],
+                               quantity:           attributes["quantity"],
+                               mass_unit:          attributes["mass_unit"],
+                               volume_unit:        attributes["volume_unit"],
+                               measure:            attributes["measure"])
+    end  
+      
   end
 
   def index

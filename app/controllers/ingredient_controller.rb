@@ -2,7 +2,14 @@ class IngredientController < ApplicationController
   before_filter :authenticate_user!, only: [:create, :update, :destroy]
 
   def create
-    Ingredient.create(name: params[:name])
+    @ingredient = Ingredient.new(name: params[:name])
+    respond_to do |format|
+      if @ingredient.save
+        format.json { render :show, status: :created }
+      else
+        format.json { render json: @ingredient.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def index

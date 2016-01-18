@@ -11,7 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160122085922) do
+
+ActiveRecord::Schema.define(version: 20160125125114) do
 
   create_table "comments", force: :cascade do |t|
     t.text     "text"
@@ -41,6 +42,9 @@ ActiveRecord::Schema.define(version: 20160122085922) do
     t.datetime "updated_at",    null: false
     t.float    "quantity"
     t.string   "unit"
+    t.integer  "mass_unit"
+    t.integer  "volume_unit"
+    t.integer  "measure"
   end
 
   add_index "ingredient_recipes", ["ingredient_id"], name: "index_ingredient_recipes_on_ingredient_id"
@@ -51,17 +55,6 @@ ActiveRecord::Schema.define(version: 20160122085922) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
-
-  create_table "rates", force: :cascade do |t|
-    t.integer  "value"
-    t.integer  "recipe_id"
-    t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "rates", ["recipe_id"], name: "index_rates_on_recipe_id"
-  add_index "rates", ["user_id"], name: "index_rates_on_user_id"
 
   create_table "recipes", force: :cascade do |t|
     t.string   "title"

@@ -11,6 +11,7 @@
     templateUrl: 'assets/templates/auth/_register.html'
 
   .when "/home",
+    controller:  'homeCtrl'
     templateUrl: 'assets/templates/home/index.html'
 
   .otherwise redirectTo: "/home"

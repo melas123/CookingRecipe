@@ -1,8 +1,12 @@
 .page-header
   %h1 Register
-%form{ ng_submit: "register()" }
-  .input-group
-    %input.form-control{ ng_model: "user.email", placeholder: "Email", type: "email" }
-  .input-group
-    %input.form-control{ ng_model: "user.password", placeholder: "Password", type: "password" }
-  %input.btn.btn-default{ type: "submit", value: "Register" }
+%form.form-horizontal{ ng_submit: "register()" }
+  .form-group
+    %label.control-label.col-sm-6 Email:
+    .col-sm-6
+      %input.form-control{ ng_model: "user.email", placeholder: "Email", type: "email" }
+  .form-group
+    %label.control-label.col-sm-6 Password:
+    .col-sm-6
+      %input.form-control{ ng_model: "user.password", placeholder: "Password", type: "password" }
+  %input.btn.btn-primary.pull-right{ type: "submit", value: "Register" }

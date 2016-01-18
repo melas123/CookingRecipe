@@ -14,6 +14,8 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+#added for windows users
+gem 'tzinfo-data', platforms: [:x64_mingw,:mingw, :mswin]
 
 gem 'haml-rails'
 gem 'coffee-rails'
@@ -25,6 +27,13 @@ gem 'angular_rails_csrf'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  #
+  gem 'rspec-rails'
+  #add factory_girl_rails as a fixtures replacement 
+  gem "factory_girl_rails"
+  #for cleaning database 
+  gem 'database_cleaner'
+
 end
 
 group :development do

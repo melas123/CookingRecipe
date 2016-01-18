@@ -1,4 +1,4 @@
-@cooking.filter 'cut max caracters', ->
+@cooking.filter 'cut_max_caracters', ->
  (value, wordwise, max, tail) ->
    if !value
      return ''

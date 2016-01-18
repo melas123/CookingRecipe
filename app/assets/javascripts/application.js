@@ -1,7 +1,13 @@
 //= require underscore
+//= require jquery
 //= require angular
 //= require AngularDevise
-//= require angular-route
 //= require angular-rails-templates
-//= require_tree ./templates
+//= require angular-route
+//= require angular-ui-bootstrap
+//= require angular-ui-bootstrap-tpls
+//= require angular-ui-select
+//= require bootstrap
+//= require toaster
+//= require angular-animate
 //= require_tree .

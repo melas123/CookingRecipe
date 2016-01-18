@@ -3,7 +3,7 @@ describe 'Filters', ->
   describe 'Cuting caracters from description recipe  filter', ->
     cut = null
     beforeEach inject(($filter) ->
-      cut = $filter('cut max caracters',{})
+      cut = $filter('cut_max_caracters',{})
       return
     )
     it 'given params value null', ->

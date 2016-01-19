@@ -3,125 +3,61 @@ require 'rails_helper'
 RSpec.describe IngredientRecipeController, type: :controller do
   render_views
 
+
+  let!(:recipe) { create(:recipe) }
+  let!(:ingredient) { create(:ingredient,:with_name) }
+  let!(:ingredient_recipe) { create(:ingredient_recipe, :valid)}
+
+
   describe "GET #new" do
-
     it "adds" do
-      r = Recipe.create!
-      ing = Ingredient.create!(:name => "Ing")
-      post :new, format: :json,:recipe_id => r.id,:ingredient_id => ing.id,:quantity => 1,:unit => "g"
-       expect(response).to have_http_status(:success)
+      post :new, format: :json,:recipe_id => recipe.id,:ingredient_id => ingredient.id,:quantity => 1,:unit => "g"
+      expect(response).to have_http_status(:success)
       expect(IngredientRecipe.find_by_quantity(1)).to_not be_nil
-    end
-
-    it "returns error when recipe missing" do
-      ing = Ingredient.create!(:name => "Ing")
-      post :new, format: :json,:recipe_id => nil,:ingredient_id => ing.id,:quantity => 1,:unit => "g"
-       expect(response).to have_http_status(500)
-    end
-
-    it "returns error when ingredient missing" do
-       r = Recipe.create!
-      post :new, format: :json,:recipe_id => r.id,:ingredient_id => nil,:quantity => 1,:unit => "g"
-      expect(response).to have_http_status(500)
-
-    end
-    it "returns error when quantity missing" do
-       r = Recipe.create!
-      ing = Ingredient.create!(:name => "Ing")
-      post :new, format: :json,:recipe_id => r.id,:ingredient_id => ing.id,:quantity => nil,:unit => "g"
-      expect(response).to have_http_status(500)
-
-    end
-    it "returns error when quantity missing" do
-       r = Recipe.create!
-      ing = Ingredient.create!(:name => "Ing")
-      post :new, format: :json,:recipe_id => r.id,:ingredient_id => ing.id,:quantity => 1,:unit => nil
-      expect(response).to have_http_status(500)
-
     end
   end
 
   describe "GET #index" do
-
+    let!(:ingredient_recipe_in_recipe) { create(:ingredient_recipe,:valid,ingredient: ingredient_recipe.ingredient,quantity: 1) } 
+    let!(:ingredient_recipe_out_recipe) { create(:ingredient_recipe,:valid,ingredient: ingredient_recipe.ingredient,quantity: 2) }
     it "display the added record" do
-      r = Recipe.create!
-      ing = Ingredient.create!(:name => "Ing")
-      ir = IngredientRecipe.create!(:recipe => r,:ingredient => ing,:quantity => 2,:unit => "g")
-      get :index, format: :json,:recipe_id => r.id
-      expect(assigns[:ingredient_recipes]).to include(ir)
+      get :index, format: :json,:recipe_id => ingredient_recipe.recipe.id
+      expect(assigns[:ingredient_recipes]).to include(ingredient_recipe)
 
     end
 
-    it "doesn't display foriegn atttributes" do
-      r = Recipe.create!
-      ing = Ingredient.create!(:name => "Ing")
-      ir = IngredientRecipe.create!(:recipe => r,:ingredient => ing,:quantity => 212,:unit => "g")
-      r2 = Recipe.create!
-      ir2 = IngredientRecipe.create!(:recipe => r2,:ingredient => ing,:quantity => 2,:unit => "g")
-      get :index, format: :json,:recipe_id => r.id
-      expect(assigns[:ingredient_recipes]).to include(ir)
-      expect(assigns[:ingredient_recipes]).to_not include(ir2)
+    it "doesn't display foriegn records" do
+      get :index, format: :json,:recipe_id => ingredient_recipe_in_recipe.recipe.id
+      expect(assigns[:ingredient_recipes]).to include(ingredient_recipe_in_recipe)
+      expect(assigns[:ingredient_recipes]).to_not include(ingredient_recipe_out_recipe)
     end
 
     it "returns the right ingredient_recipes for a recipe" do
-      r = Recipe.create!
-      ing = Ingredient.create!(:name => "Ing")
-      ir = IngredientRecipe.create!(:recipe => r,:ingredient => ing,:quantity => 123,:unit => "g")
-      r2 = Recipe.create!
-      ir2 = IngredientRecipe.create!(:recipe => r2,:ingredient => ing,:quantity => 321,:unit => "g")
-      get :index, format: :json,:recipe_id => r.id
+      get :index, format: :json,:recipe_id => ingredient_recipe_in_recipe.recipe.id
       parsed_response = JSON.parse(response.body)
       expect(parsed_response.length).to eq(1)
-      expect(response.body).to include(ir.quantity.to_s)
-      expect(response.body).to_not include(ir2.quantity.to_s)
-      expect(response.body).to_not include(ir2.quantity.to_s)
-
+      expect(response.body).to include(ingredient_recipe_in_recipe.quantity.to_s)
+      expect(response.body).to_not include(ingredient_recipe_out_recipe.quantity.to_s)
     end
 
   end
 
   describe "GET #delete" do
      it "deletes when a record is found" do
-      r = Recipe.create!
-      ing = Ingredient.create!(:name => "Ing")
-      ir = IngredientRecipe.create!(:recipe => r,:ingredient => ing,:quantity => 2,:unit => "g")
-      json = { :format => 'json', :id => ir.id }
+      json = { :format => 'json', :id => ingredient_recipe.id }
       delete :delete,json
       expect(response).to have_http_status(:success)
-      expect(IngredientRecipe.exists?(ir.id)).to be false
+      expect(IngredientRecipe.exists?(ingredient_recipe.id)).to be false
     end
 
-    it "no existant id" do
-      #we know that there's no record with an id = 1324
-      json = { :format => 'json', :id => 1324 }
-      delete :delete,json
-      expect(response).to have_http_status(500)
-    end
   end
 
   describe "GET #update" do
     it "change the ingredient unit" do
-      r = Recipe.create!
-      ing = Ingredient.create!(:name => "Ing")
-      ir = IngredientRecipe.create!(:recipe => r,:ingredient => ing,:quantity => 2,:unit => "g")
-      
-      json = { format: 'json', quantity: 3, :id => ir.id }
+      new_quantity = ingredient_recipe.quantity+1
+      json = { format: 'json', quantity: new_quantity, :id => ingredient_recipe.id }
       put :update,json
-      expect(IngredientRecipe.find(ir.id).quantity).to eq(3)
-    end
-
-    it "gets no id" do 
-      json = { format: 'json', id: nil }
-      put :update,json
-      expect(response).to have_http_status(500)
-    end
-
-
-    it "no existant id" do
-      #we know that there's no record with an id = 1324
-      json = { format: 'json', id: 1324 }
-      put :update,json
-      expect(response).to have_http_status(500)
+      expect(IngredientRecipe.find(ingredient_recipe.id).quantity).to eq(new_quantity)
     end
   end
 

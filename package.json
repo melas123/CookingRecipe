@@ -1,0 +1,16 @@
+{
+  "name": "Cooking",
+  "version": "0.0.0",
+  "description": "Cooking",
+  "dependencies": {
+    "karma": ">= 0.12.16",
+    "karma-jasmine": ">= 0.2.2",
+    "karma-coffee-preprocessor": "~0.2.1",
+    "karma-phantomjs-launcher": ">= 0.1.4"
+  },
+
+  "scripts": {
+    "test": "ulimit -Sn 1024 && node ./node_modules/karma/bin/karma start spec/karma/config/config.js",
+    "debug": "ulimit -Sn 1024 && node ./node_modules/karma/bin/karma start spec/karma/debug.js"
+  }
+}

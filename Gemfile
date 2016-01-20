@@ -35,6 +35,8 @@ group :development, :test do
   gem 'tzinfo-data', platforms: [:x64_mingw,:mingw, :mswin]
 
   gem 'faker'
+  gem 'pry-rails'
+
 end
 
 group :development do

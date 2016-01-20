@@ -3,11 +3,14 @@ require 'rails_helper'
 RSpec.describe IngredientController, type: :controller do
   render_views
 
-  describe "GET #new" do
-    
-    it "add the ingredient" do
+  describe "POST #create" do
+    it "adds the ingredient if signed in" do
+      @request.env["devise.mapping"] = Devise.mappings[:user]
+      user = FactoryGirl.create(:user)
+      sign_in user
+
       name = Faker::SlackEmoji.food_and_drink
-      post :new ,format: :json,name: name
+      post :create ,format: :json,name: name
       expect(response).to have_http_status(:success)
       expect(Ingredient.find_by_name(name)).to_not be_nil
     end
@@ -23,10 +26,14 @@ RSpec.describe IngredientController, type: :controller do
     end
   end
 
-  describe "GET #update" do
+  describe "PUT #update" do
     let!(:ingredient) { create(:ingredient,:with_name) }
 
     it "change the ingredient name" do
+      @request.env["devise.mapping"] = Devise.mappings[:user]
+      user = FactoryGirl.create(:user)
+      sign_in user
+
       new_name = Faker::SlackEmoji.food_and_drink
       json = { format: 'json', name: new_name, id: ingredient.id }
       put :update,json
@@ -34,12 +41,17 @@ RSpec.describe IngredientController, type: :controller do
     end
   end
 
-  describe "GET #delete" do
+  describe "DELETE #destroy" do
     let!(:ingredient) { create(:ingredient,:with_name) }
 
-    it "deletes when a record is found" do
+    it "destroy when a record is found" do
+      @request.env["devise.mapping"] = Devise.mappings[:user]
+      user = FactoryGirl.create(:user)
+      sign_in user
+
+
       json = { format: 'json', id: ingredient.id }
-      delete :delete,json
+      delete :destroy,json
       expect(response).to have_http_status(:success)
       expect(Ingredient.exists?(ingredient.id)).to be false
     end

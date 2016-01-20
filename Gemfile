@@ -30,9 +30,11 @@ group :development, :test do
   gem "factory_girl_rails"
   #for cleaning database 
   gem 'database_cleaner'
+  
   #for windows users
   gem 'tzinfo-data', platforms: [:x64_mingw,:mingw, :mswin]
 
+  gem 'faker'
 end
 
 group :development do

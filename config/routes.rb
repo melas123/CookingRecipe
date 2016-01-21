@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   get 'profile/index'
 
   post 'relationship/follow'
@@ -11,7 +12,7 @@ Rails.application.routes.draw do
   resources :ingredient_recipe
   resources :recipe , only: [:index,:show,:update,:create,:destroy]
   resources :comments
-  
+
   post 'ingredient_recipe/new'
   get 'ingredient_recipe/index/:recipe_id' => 'ingredient_recipe#index'
   put 'ingredient_recipe/update'

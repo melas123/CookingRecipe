@@ -9,9 +9,13 @@ RSpec.describe IngredientRecipeController, type: :controller do
   let!(:ingredient_recipe) { create(:ingredient_recipe, :valid)}
 
 
-  describe "GET #new" do
-    it "adds" do
-      post :new, format: :json, recipe_id: recipe.id, ingredient_id: ingredient.id,
+  describe "POST #create" do
+    it "adds ingredient_recipe" do
+      @request.env["devise.mapping"] = Devise.mappings[:user]
+      user = FactoryGirl.create(:user)
+      sign_in user
+
+      post :create, format: :json, recipe_id: recipe.id, ingredient_id: ingredient.id,
                  quantity: 1, unit: "g"
       expect(response).to have_http_status(:success)
       expect(IngredientRecipe.find_by_quantity(1)).to_not be_nil
@@ -43,18 +47,26 @@ RSpec.describe IngredientRecipeController, type: :controller do
 
   end
 
-  describe "GET #delete" do
+  describe "DELETE #destroy" do
      it "deletes when a record is found" do
+      @request.env["devise.mapping"] = Devise.mappings[:user]
+      user = FactoryGirl.create(:user)
+      sign_in user
+
       json = { format: :json, id: ingredient_recipe.id }
-      delete :delete,json
+      delete :destroy,json
       expect(response).to have_http_status(:success)
       expect(IngredientRecipe.exists?(ingredient_recipe.id)).to be false
     end
 
   end
 
-  describe "GET #update" do
+  describe "PUT #update" do
     it "change the ingredient unit" do
+      @request.env["devise.mapping"] = Devise.mappings[:user]
+      user = FactoryGirl.create(:user)
+      sign_in user
+
       new_quantity = ingredient_recipe.quantity+1
       json = { format: :json, quantity: new_quantity, id: ingredient_recipe.id }
       put :update,json

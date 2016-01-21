@@ -1,5 +1,7 @@
 class IngredientController < ApplicationController
-  def new
+  before_filter :authenticate_user!, only: [:create, :update, :destroy]
+
+  def create
     Ingredient.create(name: params[:name])
   end
 
@@ -12,7 +14,7 @@ class IngredientController < ApplicationController
     
   end
   
-  def delete
+  def destroy
     Ingredient.find(params[:id]).destroy
   end
 end

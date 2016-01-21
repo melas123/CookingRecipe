@@ -3,4 +3,4 @@ FactoryGirl.define do
     email { rand(1000).to_s + Faker::Internet.email}
     password Faker::Internet.password(10)
   end
->>>>>>> FEATURE comments backend
+end

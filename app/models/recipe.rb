@@ -4,4 +4,6 @@ class Recipe < ActiveRecord::Base
   has_many :ingredient_recipes
   has_many :images
   has_many :comments
+
+  scope :most_recent, -> { order( created_at: :desc ) }
 end

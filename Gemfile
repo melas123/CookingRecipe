@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
-
+# the rails gem for pagiantion
+gem 'will_paginate', '~> 3.0.7'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5'
 # Use sqlite3 as the database for Active Record
@@ -26,11 +27,11 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'rspec-rails'
-  #add factory_girl_rails as a fixtures replacement 
+  #add factory_girl_rails as a fixtures replacement
   gem "factory_girl_rails"
-  #for cleaning database 
+  #for cleaning database
   gem 'database_cleaner'
-  
+
   #for windows users
   gem 'tzinfo-data', platforms: [:x64_mingw,:mingw, :mswin]
 

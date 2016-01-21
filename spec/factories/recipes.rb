@@ -1,4 +1,5 @@
 # spec/factories/recipes.rb 
+# spec/factories/recipes.rb 
 FactoryGirl.define do 
     factory :recipe do
         title "title test"

@@ -13,11 +13,31 @@ module.exports = function(config) {
     frameworks: ['jasmine'],
 
     preprocessors: {
-     '**/*.coffee': ['coffee']
+     '**/*.coffee': ['coffee'],
+     '**/*.haml': ['ng-haml2js']
     },
+    ngHaml2JsPreprocessor: {
+      // strip this from the file path
+      stripPrefix: 'public/',
+     // prepend this to the
+     prependPrefix: 'served/',
+     // or define a custom transform function
+
+
+  // setting this option will create only a single module that contains templates
+  // from all the files, so you can load them all with module('foo')
+  moduleName: 'templates'
+},
     // list of files / patterns to load in the browser
     files: [
-      'spec/javascripts/*.coffee'
+    'vendor/assets/bower_components/angular/angular.js',
+    'vendor/assets/bower_components/angular-route/angular-route.js',
+    'vendor/assets/bower_components/angular-mocks/angular-mocks.js',
+    'vendor/assets/bower_components/AngularDevise/test/devise.js',
+    'spec/javascripts/*.coffee',
+    'app/assets/javascripts/*.{js,coffee}',
+    'app/assets/javascripts/filter/*.{js,coffee}',
+    '**/*.haml'
     ],
 
 

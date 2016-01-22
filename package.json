@@ -6,7 +6,8 @@
     "karma": ">= 0.12.16",
     "karma-jasmine": ">= 0.2.2",
     "karma-coffee-preprocessor": "~0.2.1",
-    "karma-phantomjs-launcher": ">= 0.1.4"
+    "karma-phantomjs-launcher": ">= 0.1.4",
+    "karma-ng-haml2js-preprocessor": ">= 0.1"
   },
 
   "scripts": {

@@ -14,6 +14,9 @@ class RecipeController < ApplicationController
     respond_with( Paginator.pagination_attributes( @recipes ).merge!( recipes:  @recipes ), status: 200 )
   end
 
+  def rate
+    @rate = Recipe.find(params[:recipe_id]).calculate_rate_for_recipe
+  end 
   #Create new recipe
   #POST /recipes.json
   def create

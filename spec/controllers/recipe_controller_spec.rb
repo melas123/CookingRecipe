@@ -1,9 +1,11 @@
 require 'rails_helper'
 RSpec.describe RecipeController, type: :controller do
     before( :each ) do
-      request.env["HTTP_ACCEPT"] = "application/json"
+      request.env[ "HTTP_ACCEPT" ] = "application/json"
     end
     let!( :recipe_created ) { create( :recipe ) } # saved in db
+    let!( :recipes_created ) { create_list( :recipe, 30 ) } #save a list of recipe
+
     # Current user
     #------------------------------------------------
     describe "Get the current user" do
@@ -64,20 +66,24 @@ RSpec.describe RecipeController, type: :controller do
       # For all users
       # ---------------------------------------------
       context "for all users" do
-        # get all recipes  
-        # ---------------------------------------------
-        describe "GET #index" do
-          it "assigns all recipes as @recipes" do
-            get :index, format: :json
-            expect( assigns( :recipes ) ).to match_array( [ recipe_created ] )
-          end
-        end
-        # show recipe
-        # ---------------------------------------------
         describe "Get #show" do
+          # show recipe
+          # ---------------------------------------------
           it "return recipe details" do
             get :show, format: :json, id: recipe_created.id
             expect( assigns( :recipe ).title ).to eq recipe_created.title
+          end
+        end
+        # paginate recipes
+        # ---------------------------------------------
+        describe "Get All recipes with pagination" do
+          it 'return recipes : 10 per page 'do
+            get :index, format: :json, page: 2
+            expect( assigns( :recipes ).length ).to eq 10
+          end
+          it 'should sort recipes by date of publication' do
+            get :index, format: :json
+            expect( assigns( :recipes )[0] ).to eq Recipe.most_recent.first
           end
         end
       end

@@ -34,9 +34,13 @@ module.exports = function(config) {
     'vendor/assets/bower_components/angular-route/angular-route.js',
     'vendor/assets/bower_components/angular-mocks/angular-mocks.js',
     'vendor/assets/bower_components/AngularDevise/test/devise.js',
+    'vendor/assets/bower_components/karma-read-json/karma-read-json.js',
     'spec/javascripts/*.coffee',
+    'spec/javascripts/controllers/*.coffee',
+    'spec/javascripts/directives/*.coffee',
     'app/assets/javascripts/*.{js,coffee}',
     'app/assets/javascripts/filter/*.{js,coffee}',
+    'app/assets/javascripts/controllers/home/*.{js,coffee}',
     '**/*.haml'
     ],
 

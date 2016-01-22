@@ -1,0 +1,7 @@
+%span
+  {{from}} - {{to}} of {{total}}
+.btn-group.btn-group-sm
+  %button.btn.btn-default{ ng: { click: "previousPage()", class: "{'disabled': from == 1}" },  id:  "btn1" }
+    %i.fa.fa-chevron-left.fa-lg
+  %button.btn.btn-default{ ng: { click: "nextPage()", class: "{'disabled': to == total}"}
+    %i.fa.fa-chevron-right.fa-lg

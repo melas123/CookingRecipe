@@ -1,5 +1,7 @@
 class Recipe < ActiveRecord::Base
-  validates :title,:description, presence: true
+
+  validates :title, :description, presence: true
+
   belongs_to :user
   has_many :ingredient_recipes
   has_many :images
@@ -8,13 +10,20 @@ class Recipe < ActiveRecord::Base
   scope :most_recent, -> { order( created_at: :desc ) }
   has_many :rates
 
-  
-  def calculate_rate_for_recipe () 
+
+  def calculate_rate_for_recipe ()
     if rates.count == 0
       return 0
-    else  
+    else
       return rates.average(:value)
-    end  
-  end 
-   
+    end
+  end  
+
+  #Override the as_json method to include the user name:
+  def as_json(options = {})
+    super(options.merge(include: {
+                            user: { only: [ :name,:id ] }
+                                 }
+          ))
+  end
 end

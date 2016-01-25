@@ -1,4 +1,4 @@
-@cooking.controller 'ModalEditRecipeController', ( $scope, $rootScope, $modalInstance, datacontext, Notification, recipe, volumes, weights, measures ) ->
+@cooking.controller 'ModalEditRecipeController', ( $scope, $rootScope, $uibModalInstance, datacontext, Notification, recipe, volumes, weights, measures ) ->
 
   $scope.name =                 ''
   $scope.selectedIngredient =   []
@@ -13,8 +13,8 @@
   $scope.chosenMeasure =        $scope.weights
   $scope.measure =              $scope.measures[0].id
   $scope.unit =                 $scope.weights[0].id
-  
-  
+
+
   $scope.modalTitle = 'Editer une recette'
 
   for item, index in recipe.ingredient_recipes
@@ -36,12 +36,10 @@
     title:        recipe.title
     description:  recipe.description
 
-
   datacontext.getIngredients().success( (data) ->
     $scope.ingredients = data
   ).error ( data, status ) ->
     alert 'Error on getting ingredients'
-
 
   $scope.changeMeasure = ->
     if $scope.measure == 1
@@ -50,8 +48,6 @@
     if $scope.measure == 2
       $scope.chosenMeasure =   $scope.volumes
       $scope.unit =            $scope.volumes[0].id
-
-
 
   $scope.addTolistIngredient = ( ingred, quantity, measure,unit ) ->
     if quantity == "" or quantity == undefined  or ingred == undefined
@@ -96,9 +92,7 @@
                 measure :       measure
 
           $scope.listRecipeIngredient.push(obj)
-          listRecipeIngredientTosend.push(obj)  
-
-
+          listRecipeIngredientTosend.push(obj)
 
   $scope.addIngredient = ->
     if $scope.name == '' or $scope.name == undefined
@@ -113,7 +107,6 @@
         datacontext.createIngredient(name: $scope.name ).success (data) ->
           $scope.ingredients.push( data )
           $scope.name = ""
-
   #Update Recipe
   $scope.addRecipe = ->
     if !$scope.recipe.title or $scope.recipe.title == '' or !$scope.recipe.description or $scope.recipe.description == ''
@@ -127,15 +120,11 @@
       $rootScope.$broadcast 'ReloadRecipe', 'Some data'
       $scope.cancel()
 
-      
-
-
   $scope.deleteIngredientFromList = ( obj ) ->
     datacontext.destroyIngredientRecipe( obj.ingredient_recipe_id )
     index = $scope.listRecipeIngredient.indexOf( obj )
     $scope.listRecipeIngredient.splice( index, 1 )
     $rootScope.$broadcast 'ReloadRecipe', 'Some data'
 
-
   $scope.cancel = ->
-    $modalInstance.dismiss 'cancel'
+    $uibModalInstance.dismiss 'cancel'

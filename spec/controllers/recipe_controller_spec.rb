@@ -4,10 +4,10 @@ RSpec.describe RecipeController, type: :controller do
       request.env[ "HTTP_ACCEPT" ] = "application/json"
     end
     let!( :recipe_created ) { create( :recipe ) } # saved in db
-    let!( :recipes_created ) { create_list( :recipe, 30 ) } #save a list of recipe
+    let!( :recipes_created ) { create_list( :recipe, 30 ) } #save a list of
+    let!( :recipe_with_ingredient ) { create( :recipe, :with_ingredients ) }
 
     # Current user
-    #------------------------------------------------
     describe "Get the current user" do
       login_user
       it "should have a current_user" do
@@ -15,10 +15,8 @@ RSpec.describe RecipeController, type: :controller do
       end
     end
     # CRUD Recipe
-    #------------------------------------------------
     describe "CRUD" do
       # For logged in User
-      # ---------------------------------------------
       context "if user logged in" do
         #create recipe
         login_user
@@ -42,7 +40,6 @@ RSpec.describe RecipeController, type: :controller do
         end
       end
       # For non-logged in User
-      # ---------------------------------------------
       context "user log out" do
         before( :each ) do
           @recipe_attributes = FactoryGirl.attributes_for :recipe
@@ -57,25 +54,22 @@ RSpec.describe RecipeController, type: :controller do
           put :update, format: :json, id: recipe_created.id
           expect( response.status ).to eq 401
         end
-        #try to update recipe without authentification
-        it "put request without authentification" do
+        #try to remove recipe without authentification
+        it "delete request without authentification" do
           delete :destroy, format: :json, id: recipe_created.id
           expect( response.status ).to eq 401
         end
       end
       # For all users
-      # ---------------------------------------------
       context "for all users" do
         describe "Get #show" do
           # show recipe
-          # ---------------------------------------------
           it "return recipe details" do
             get :show, format: :json, id: recipe_created.id
             expect( assigns( :recipe ).title ).to eq recipe_created.title
           end
         end
         # paginate recipes
-        # ---------------------------------------------
         describe "Get All recipes with pagination" do
           it 'return recipes : 10 per page 'do
             get :index, format: :json, page: 2
@@ -83,8 +77,34 @@ RSpec.describe RecipeController, type: :controller do
           end
           it 'should sort recipes by date of publication' do
             get :index, format: :json
-            expect( assigns( :recipes )[0] ).to eq Recipe.most_recent.first
+            expect( assigns( :recipes ) [ 0 ] ).to eq Recipe.most_recent( 1 ).first
           end
+        end
+        # search for recipe
+        it 'if search == nil : return the 10 first recipes' do
+          get :index, format: :json, search: nil, page: 1
+          expect( assigns( :recipes ).length ).to eq 10
+        end
+
+        it 'search for recipe by: title' do
+          searchedTitle = Recipe.first.title
+          get :index, format: :json, search: searchedTitle, page: 1
+          expect( response.status ).to eq 200
+          expect( assigns( :recipes ).map(&:title) ).to eq(  [searchedTitle ] )
+        end
+
+        it 'search for recipe by: description' do
+          searchedDescription = Recipe.first.description
+          expect( response.status ).to eq 200
+          get :index, format: :json, search: searchedDescription, page: 1
+          expect( assigns( :recipes ).map( &:description ) ).to eq(  [ searchedDescription ] )
+        end
+
+        it "search for recipe by : ingredients" do
+          first_ingredient = recipe_with_ingredient.ingredients.first.name
+          get :index, format: :json, search: first_ingredient, page: 1
+          expect( response.status ).to eq 200
+          expect( assigns( :recipes ).map(&:id)).to eq [ recipe_with_ingredient.id ]
         end
       end
     end

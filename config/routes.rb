@@ -8,7 +8,8 @@ Rails.application.routes.draw do
   get 'relationship/following/:user_id' => "relationship#following"
 
   resources :image, only: [ :index, :create, :destroy, :update ]
-  resources :ingredient, only: [ :index, :create ]
+  resources :ingredient, only: [ :index, :create, :destroy ]
+
   resources :ingredient_recipe
   resources :recipe , only: [ :index,:show,:update,:create,:destroy ]
   resources :comments

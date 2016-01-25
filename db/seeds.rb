@@ -1,5 +1,5 @@
 
-[ User, Ingredient, Recipe , IngredientRecipe ].each( &:delete_all )
+[ User, Ingredient, Recipe , IngredientRecipe, Rate, Favorite, Relationship ].each( &:delete_all )
 
 puts 'Create users :'
 %w( admin user1 user2 user3 ).each do |name|
@@ -16,12 +16,24 @@ puts 'Create a list of recipes :'
   Recipe.create( title: "recipe#{n}", description:"description for recipe #{n}")
 end
 
-puts 'add all recipes to the first user'
+puts 'add all recipes to the first user :'
 ( Recipe.all ).each do |recipe|
   ( User.first ).recipes << recipe
 end
 
-puts 'add ingredients to first recipe:'
+puts 'add ingredients to first recipe :'
 ( Ingredient.all ).each do |ingredient|
-  Recipe.first.ingredient_recipes.create( ingredient: ingredient, quantity: 2, unit: "Kg" )
+  Recipe.first.ingredient_recipes.create( ingredient: ingredient, quantity: 2 )
+end
+
+puts 'add comments to first recipe :'
+%w( nice good Delicious ).each do |comment|
+  Comment.create( text: comment, user_id: User.first.id, recipe: Recipe.first )
+end
+
+puts 'add rates to first recipe , set it as favorite for all users and add followers to first user:'
+( User.all ).each do |user|
+  Rate.create( recipe: Recipe.first, value: 3 , user_id: user.id )
+  Favorite.create( user_id: user.id, recipe_id: Recipe.first.id )
+  Relationship.create( follower_id: user.id, followed_id: User.first.id )
 end

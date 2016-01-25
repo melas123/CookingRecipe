@@ -1,12 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Ingredient, type: :model do
-  
+
 
   it "has name" do
-  	#i = Ingredient.new(:name => "IngTest")
   	expect(build :ingredient, :with_name).to be_valid
-  	 
+
   end
 
   it "has no name" do

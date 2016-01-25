@@ -1,6 +1,6 @@
-@cooking.controller 'navCtrl', ($scope, $rootScope, Auth,$route) ->
+@cooking.controller 'navCtrl', ( $scope, $rootScope, Auth, $route ) ->
 
-  $scope.$route = $route;
+  $scope.$route = $route
   $scope.signedIn = Auth.isAuthenticated
   $scope.logout   = Auth.logout
 

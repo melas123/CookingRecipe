@@ -1,5 +1,5 @@
 class IngredientController < ApplicationController
-  before_filter :authenticate_user!, only: [:create, :update, :destroy]
+  before_filter :authenticate_user!, only: [ :create, :update, :destroy ]
 
   def create
     @ingredient = Ingredient.new(name: params[:name])
@@ -17,11 +17,11 @@ class IngredientController < ApplicationController
   end
 
   def update
-    Ingredient.find( params[:id] ).update( name: params[:name] )
-    
+    Ingredient.find( params[ :id ] ).update( name: params[:name] )
+
   end
-  
+
   def destroy
-    Ingredient.find(params[:id]).destroy
+    Ingredient.find( params[ :id] ).destroy
   end
 end

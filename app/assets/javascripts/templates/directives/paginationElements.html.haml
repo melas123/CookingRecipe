@@ -1,0 +1,12 @@
+%nav
+  %ul.pager
+    %li{ class: "previous", ng: { class: "{ 'disabled': from == 1 }" }  }
+      %a{ ng: { click: "previousPage()" } }
+        %span{aria: {hidden:"true"} }
+          &larr;
+        Précedant
+    %li{ class: "next", ng: { class: "{ 'disabled': to == total }" }  }
+      %a{ ng: { click:"nextPage()" } }
+        Suivant
+        %span{ aria: {hidden:"true"} }
+          &rarr;

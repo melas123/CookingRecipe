@@ -1,7 +1,7 @@
 .home-container{ ng_controller: 'homeCtrl' }
 
   %p{ ng_show:  "signedIn()" }
-    Welcome {{ user.email }}
+    Welcome {{ user.name }}
 
   #search
     %label{for: 'search-input'}

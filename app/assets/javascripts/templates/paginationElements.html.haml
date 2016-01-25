@@ -1,0 +1,12 @@
+%nav
+  From : ({{from}}) - to ({{to}}) , total of ({{total}})
+  %ul.pagination
+    %li.page-item.previous
+      %a{"ng-click" => "previousPage()", :ng_class => "{'disabled': from == 1}"}
+        &larr; Older
+    %li.page-item.active{ng_repeat:'a in range(1,3)'}
+      %a.page-link{"ng-click" => "getPage(a)"}
+        {{a}}
+    %li.next
+      %a{"ng-click" => "nextPage()", :ng_class => "{'disabled': to == total}"}
+        Newer &rarr;

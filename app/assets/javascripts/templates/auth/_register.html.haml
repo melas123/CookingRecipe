@@ -2,6 +2,10 @@
   %h1 Register
 %form.form-horizontal{ ng_submit: "register()" }
   .form-group
+  %label.control-label.col-sm-6 Name:
+  .col-sm-6
+    %input.form-control{ ng_model: "user.name", placeholder: "Name", type: "text" }
+  .form-group
     %label.control-label.col-sm-6 Email:
     .col-sm-6
       %input.form-control{ ng_model: "user.email", placeholder: "Email", type: "email" }

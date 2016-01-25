@@ -7,6 +7,6 @@
     %li{ ng_hide: "signedIn()" }
       %a{ href: "#/register" } Register
     %li{ ng_show:  "signedIn()" }
-      %a{ href: "#/" } {{ user.email }}
+      %a{ href: "#/" } {{ user.name }}
     %li{ ng_show:  "signedIn()" }
       %a{ ng_click: "logout()" } Log Out

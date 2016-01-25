@@ -77,15 +77,29 @@ RSpec.describe RecipeController, type: :controller do
         # paginate recipes
         # ---------------------------------------------
         describe "Get All recipes with pagination" do
+
           it 'return recipes : 10 per page 'do
             get :index, format: :json, page: 2
             expect( assigns( :recipes ).length ).to eq 10
           end
+
           it 'should sort recipes by date of publication' do
             get :index, format: :json
-            expect( assigns( :recipes )[0] ).to eq Recipe.most_recent.first
+            expect( assigns( :recipes )[ 0 ] ).to eq Recipe.most_recent(1).first
           end
         end
+        # search for recipe
+        # ---------------------------------------------
+        it 'if search == nil : return the 10 first recipes' do
+          get :index, format: :json, search: nil, page: 1
+          expect( assigns( :recipes ).length ).to eq 10
+        end
+        it 'search for recipe by: title' do
+          searchedTitle = Recipe.last.title
+          get :index, format: :json, search: searchedTitle, page: 1
+          expect( assigns( :recipes ) ).to eq searchedTitle
+        end
+
       end
     end
 end

@@ -8,15 +8,21 @@ class RecipeController < ApplicationController
 
   #Show all recipes
   def index
-    #return all recipes sorted by date of publication.
-    @recipes = Recipe.most_recent.paginate( page: params[ :page ], per_page: 10 )
-    #byebug
-    respond_with( Paginator.pagination_attributes( @recipes ).merge!( recipes:  @recipes ), status: 200 )
+    if search = params[:search] 
+      #filter recipes by title and description sorted by date of publication.(call search scope of Recipe model)
+      @recipes = Recipe.search( search ).most_recent( params[ :page ] )
+      respond_with( Paginator.pagination_attributes( @recipes ).merge!( recipes:  @recipes ), status: 200 )
+    else
+      #return all recipes sorted by date of publication.
+      @recipes = Recipe.most_recent( params[ :page ] )
+      #byebug
+      respond_with( Paginator.pagination_attributes( @recipes ).merge!( recipes:  @recipes ), status: 200 )
+    end
   end
 
   def rate
     @rate = Recipe.find(params[:recipe_id]).calculate_rate_for_recipe
-  end 
+  end
   #Create new recipe
   #POST /recipes.json
   def create

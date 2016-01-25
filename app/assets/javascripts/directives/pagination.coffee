@@ -33,5 +33,5 @@
           return true
       return
   ]
-  templateUrl: 'assets/templates/paginationElements.html'
+  templateUrl: 'assets/templates/directives/paginationElements.html'
   }

@@ -1,14 +1,10 @@
-.home-container{ ng_controller: 'homeCtrl' }
-
-  %p{ ng_show:  "signedIn()" }
-    Welcome {{ user.email }}
-
-  #search
-    %label{for: 'search-input'}
-      %i.fa.fa-search
-    %input.form-control.search-query{ id: 'search-input' , ng_model: 'searchRecipe',placeholder:'Search'}
-    %a.fa.fa-times-circle{ id: 'search-clear', tabindex:'1' , ng_show:'searchRecipe' , ng_click:'searchRecipe = null'}
-
+%div{ ng_controller: "profileCtrl" }
+  .row
+    .col-sm-3
+      %img{ src: "assets/avatar_homme.jpg" }
+    .col-sm-9
+      %h2 {{user.name}}
+      %h3 {{user.email}}
   #recipes
     %div{ ng_repeat: 'recipe in recipes'}
       .recipe.row
@@ -18,7 +14,6 @@
           .title
             %a{ ng_href: '#/show?id={{recipe.id}}'} {{recipe.title}}
           %p  {{recipe.description | cut_max_caracters:true:100:'...'}}
-
         .recipe_content.pull-right
           .username
             publié: {{recipe.created_at | date:" dd/MM/yyyy"}} par {{recipe.username}}

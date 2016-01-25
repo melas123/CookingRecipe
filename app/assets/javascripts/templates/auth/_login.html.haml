@@ -1,12 +1,16 @@
 .page-header
   %h1 Log In
-%form.form-horizontal{ ng_submit: "login()" }
-  .form-group
+%form.form-horizontal{ ng_submit: "login()",name:"loginForm" }
+  .form-group{ ng_class: "{ 'has-error' : loginForm.email.$invalid && !loginForm.email.$pristine }" }
     %label.control-label.col-sm-6 Email:
     .col-sm-6
-      %input.form-control{ ng_model: "user.email", placeholder: "Email", type: "email" }
+      %input.form-control{ ng_model: "user.email", placeholder: "Email ...", type: "email" , name:"email" }
+      %p.help-block{ ng_show: "loginForm.email.$invalid && !loginForm.email.$pristine" }
+        Entrer un Email Valide.
   .form-group
-    %label.control-label.col-sm-6 Password:
-    .col-sm-6
-      %input.form-control{ ng_model: "user.password", placeholder: "Password", type: "password" }
-  %input.btn.btn-primary.pull-right{ type: "submit", value: "Log In" }
+    %label.control-label.col-sm-6 mot de passe:
+    .col-sm-6{ ng_class: "{ 'has-error' : loginForm.password.$invalid && !loginForm.password.$pristine }" }
+      %input.form-control{ ng_model: "user.password", ng_minlength:"8" , placeholder: "mot de passe ...", type: "password" , name:"password" }
+      %p.help-block{"ng-show" => "loginForm.password.$invalid && !registrationForm.password.$pristine"}
+        le mot de passe contient au moins 8 caractères.
+  %input.btn.btn-primary.pull-right{ type: "submit", value: "Log In" , ng_disabled:"loginForm.$invalid" }

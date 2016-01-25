@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'profile/index'
+
   post 'relationship/follow'
   post 'relationship/unfollow'
   get 'relationship/followers/:user_id' => "relationship#followers"

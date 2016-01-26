@@ -5,7 +5,8 @@ class Recipe < ActiveRecord::Base
   belongs_to :user
   has_many :ingredient_recipes
   has_many :images
-  has_many :comments
+  has_many :favorites, :dependent => :destroy
+  has_many :comments, :dependent => :destroy
 
   scope :most_recent, -> { order( created_at: :desc ) }
   has_many :rates
@@ -17,7 +18,7 @@ class Recipe < ActiveRecord::Base
     else
       return rates.average(:value)
     end
-  end  
+  end
 
   #Override the as_json method to include the user name:
   def as_json(options = {})

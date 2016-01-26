@@ -13,5 +13,15 @@
   .when "/home",
     controller:  'homeCtrl'
     templateUrl: 'assets/templates/home/index.html'
+    activetab: 'home'
+
+  .when "/profile",
+    controller:  'profileCtrl'
+    templateUrl: 'assets/templates/profile/profile.html'
+    activetab: 'profile'
+
+  .when "/show",
+    controller:  'showCtrl'
+    templateUrl: 'assets/templates/home/show.html'
 
   .otherwise redirectTo: "/home"

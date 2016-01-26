@@ -1,12 +1,22 @@
 .page-header
-  %h1 Register
-%form.form-horizontal{ ng_submit: "register()" }
-  .form-group
+  %h1 Inscription
+%form.form-horizontal{ ng_submit: "register()",name:"registrationForm" }
+  .form-group{ ng_class: "{ 'has-error' : registrationForm.name.$invalid && !registrationForm.name.$pristine }" }
+    %label.control-label.col-sm-6 Nom:
+    .col-sm-6
+      %input.form-control{ ng:{model: "user.name" , minlength:"3"} , placeholder: "Nom ...", name:"name" , required:"true" }
+      %p.help-block{ ng_show:  "registrationForm.name.$invalid && !registrationForm.name.$pristine"}
+        Le nom est trop court.
+  .form-group{ ng_class: "{ 'has-error' : registrationForm.email.$invalid && !registrationForm.email.$pristine }" }
     %label.control-label.col-sm-6 Email:
     .col-sm-6
-      %input.form-control{ ng_model: "user.email", placeholder: "Email", type: "email" }
-  .form-group
-    %label.control-label.col-sm-6 Password:
+      %input.form-control{ ng_model: "user.email", placeholder: "Email ..." , type: "email", name: "email" }
+      %p.help-block{ng_show : "registrationForm.email.$invalid && !registrationForm.email.$pristine"}
+        Entrer un Email Valide.
+  .form-group{ ng_class: "{ 'has-error' : registrationForm.password.$invalid && !registrationForm.password.$pristine }" }
+    %label.control-label.col-sm-6 Mot de passe:
     .col-sm-6
-      %input.form-control{ ng_model: "user.password", placeholder: "Password", type: "password" }
-  %input.btn.btn-primary.pull-right{ type: "submit", value: "Register" }
+      %input.form-control{ ng:{model: "user.password" , minlength:"8" } , placeholder: "mot de passe ...", type: "password" , name:"password" }
+      %p.help-block{ ng_show: "registrationForm.password.$invalid && !registrationForm.password.$pristine"}
+        le mot de passe contient au moins 8 caractères.
+  %input.btn.btn-primary.pull-right{ type: "submit", value: "Inscrivez-vous" , ng_disabled:"registrationForm.$invalid"}

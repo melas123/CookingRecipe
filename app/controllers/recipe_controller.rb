@@ -16,7 +16,7 @@ class RecipeController < ApplicationController
 
   def rate
     @rate = Recipe.find(params[:recipe_id]).calculate_rate_for_recipe
-  end 
+  end
   #Create new recipe
   #POST /recipes.json
   def create

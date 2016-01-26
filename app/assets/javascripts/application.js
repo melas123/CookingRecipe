@@ -1,3 +1,4 @@
+//= require underscore
 //= require angular
 //= require AngularDevise
 //= require angular-route

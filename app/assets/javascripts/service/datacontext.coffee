@@ -24,14 +24,14 @@
         Notification.success( 'Adding ' + recipe.title + ' successfully' )
     ).error ( data ) ->
       Notification.error( 'Error on Adding ' + recipe.title )
-      
+
   @updateRecipe = ( recipe, listRecipeIngredient ) ->
     $http.put( '/recipe/' + recipe.id + '.json', recipe ).success(( data ) ->
       Notification.success( 'Updating ' + recipe.title + ' successfully' )
     ).error ( data ) ->
       Notification.error( 'Error on updating ' + recipe.title )
-      
+
   return @
 
-    
-  
+
+

@@ -7,10 +7,10 @@ Rails.application.routes.draw do
   get 'relationship/followers/:user_id' => "relationship#followers"
   get 'relationship/following/:user_id' => "relationship#following"
 
-  resources :image
-  resources :ingredient, only: [ :index, :create]
+  resources :image, only: [ :index, :create, :destroy, :update ]
+  resources :ingredient, only: [ :index, :create ]
   resources :ingredient_recipe
-  resources :recipe , only: [:index,:show,:update,:create,:destroy]
+  resources :recipe , only: [ :index,:show,:update,:create,:destroy ]
   resources :comments
   resources :rates
   devise_for :users

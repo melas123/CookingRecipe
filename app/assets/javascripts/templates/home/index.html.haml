@@ -8,6 +8,7 @@
       %button.btn.btn-default.btn-addon.btn-sm.m-t-n-xs.pull-right{ ng_click: "openModalRecipe()" }
         %i.fa.fa-plus.text-info
           Recette
+
   #search
     %label{for: 'search-input'}
       %i.fa.fa-search
@@ -18,7 +19,7 @@
     %div{ ng_repeat: 'recipe in recipes'}
       .recipe.row
         .recipe_image.col-sm-3
-          %img{ src: '/assets/Cre.jpg' }
+          %img{ ng:{ src: "{{ recipe.images[0].avatar.thumb.url }}" }, type: "file" }
         .recipe_content.col-sm-9
           .row
             .col-sm-6.pull-left

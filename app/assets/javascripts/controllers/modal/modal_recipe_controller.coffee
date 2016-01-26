@@ -1,13 +1,14 @@
-@cooking.controller 'ModalRecipeController', ($scope, $rootScope, $modalInstance, datacontext, Notification, recipe ) ->
-  
- 
+@cooking.controller 'ModalRecipeController', ($scope, $rootScope, $modalInstance,
+ datacontext, Notification, recipe, FileUploader ) ->
+
+
   $scope.name                   = ''
   $scope.multiselect            = {}
   $scope.multiselect.ingredient = []
   $scope.listRecipeIngredient   = []
   $scope.ingredients            = []
-  
-    
+
+
   $scope.volumes = [
     { id: 1, name: 'ml'   },
     { id: 2, name: 'cl'   },
@@ -23,10 +24,20 @@
     { id: 3, name: 'None'   }
   ]
 
+  #upload Image
+
+  csrf_token =         document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+  uploader   =         $scope.uploader = new FileUploader(
+    url:               '/image',
+    alias:             'avatar',
+    headers:           { 'X-CSRF-TOKEN': csrf_token,'request': 'application/json' },
+    withCredentials:   true )
+
+
   $scope.chosenMeasure = $scope.weights
   $scope.measure =       $scope.measures[0].id
   $scope.unit =          $scope.weights[0].id
-  
+
   if recipe
     $scope.modalTitle = 'Editer une recette'
     for item, index in recipe.ingredient_recipes
@@ -47,18 +58,18 @@
     $scope.recipe =
       title:        ""
       description:  ""
-  
+
   datacontext.getIngredients().success( (data) ->
     $scope.ingredients = data
   ).error (data, status) ->
     alert 'Error on getting ingredients'
-  
-  
+
+
   $scope.$on 'ReloadIngredient', (event, data) ->
     datacontext.getIngredients().success (data) ->
       $scope.ingredients = data
- 
- 
+
+
   $scope.changeMeasure = ->
     if $scope.measure == 1
       $scope.chosenMeasure =   $scope.weights
@@ -68,13 +79,16 @@
       $scope.unit =            $scope.volumes[0].id
 
 
-  $scope.onFileSelect = ($files) ->
-    i = 0
-    while i < $files.length
-      $scope.$file = $files[i]
-      i++
-      
-      
+
+
+  # FILTERS for the images
+  uploader.filters.push
+    name: 'imageFilter'
+    fn: (item, options) ->
+      type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|'
+      '|jpg|png|jpeg|bmp|gif|'.indexOf(type) != -1
+
+
   $scope.addTolistIngredient = (ingred, quantity, measure,unit) ->
     if quantity == "" or quantity == undefined  or ingred == undefined
       Notification.info( 'Please enter all informations' )
@@ -95,12 +109,12 @@
             measure    : measure
           $scope.listRecipeIngredient.push(obj)
 
-  
+
   $scope.deleteIngredientFromList = (obj) ->
     index = $scope.listRecipeIngredient.indexOf(obj)
     $scope.listRecipeIngredient.splice(index, 1)
-    
-    
+
+
   $scope.addIngredient = ->
     if $scope.name == '' or $scope.name == undefined
       Notification.info( 'You need to enter ingredient name!' )
@@ -115,7 +129,7 @@
         $scope.$broadcast 'ReloadIngredient', 'Some data'
         # reinitialize attribute
         $scope.name = ""
-  
+
   $scope.addRecipe = ->
     listRecipeIngredientToSend = []
     #listIngredientToSend = []
@@ -150,27 +164,36 @@
               mass_unit     : null
               volume_unit   : null
         listRecipeIngredientToSend.push(object)
+
       if !recipe
-        datacontext.createRecipe
+        datacontext.createRecipe(
           title: $scope.recipe.title
           description: $scope.recipe.description,
-          listRecipeIngredientToSend
+          listRecipeIngredientToSend).success( (data) ->
+            uploader.onBeforeUploadItem = (item)->
+              item.formData.push( "recipe_id": data.id, "image_name": item.file.name )
+              #console.info 'onBeforeUploadItem', item
+              #item.upload()
+            uploader.uploadAll()
+            $rootScope.$broadcast 'ReloadRecipe', 'Some data')
+
         $scope.recipe.title         = ''
         $scope.recipe.description   = ''
         $scope.listRecipeIngredient = []
+
       else
         datacontext.updateRecipe
           id: recipe.id
           title: $scope.recipe.title
           description: $scope.recipe.description
-		           
-      $rootScope.$broadcast 'ReloadRecipe', 'Some data'
-      
-      
+
+
+
+
   $scope.deleteIngredientFromList = (obj) ->
     index = $scope.listRecipeIngredient.indexOf(obj)
     $scope.listRecipeIngredient.splice(index, 1)
-      
+
 
   $scope.cancel = ->
     $modalInstance.dismiss 'cancel'

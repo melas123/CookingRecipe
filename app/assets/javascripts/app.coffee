@@ -4,4 +4,4 @@
 
 @cooking = angular.module( 'cookingRecipes',[ 'Devise', 'ngRoute', 'templates',
                                               'ui.bootstrap','ui.select','toaster',
-                                              'ngAnimate' ] )
+                                              'ngAnimate', 'angularFileUpload' ] )

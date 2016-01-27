@@ -1,24 +1,39 @@
 .home-container{ ng_controller: 'homeCtrl' }
 
   %p{ ng_show:  "signedIn()" }
-    Welcome {{ user.email }}
-
+    Welcome {{ user.name }}
+  .row{ng_show: 'auth'}
+    .col-sm-12
+      / Trigger the modal with a button
+      %button.btn.btn-default.btn-addon.btn-sm.m-t-n-xs.pull-right{ng_click: "OpenModalRecipe('Add')", :type => "button"}
+        %i.fa.fa-plus.text-info>
+          Recette
   #search
     %label{for: 'search-input'}
       %i.fa.fa-search
     %input.form-control.search-query{ id: 'search-input' , ng_model: 'searchRecipe',placeholder:'Search'}
-    %a.fa.fa-times-circle{ id: 'search-clear', tabindex:'1' , ng_show:'searchRecipe' , ng_click:'searchRecipe = null'}
-
+      %a.fa.fa-times-circle{ id: 'search-clear', tabindex:'1' , ng: { show: 'searchRecipe', click: 'searchRecipe = null'}}
+  
   #recipes
-    %div{ ng_repeat: 'recipe in recipes'}
+    %div{ ng_repeat: 'r in recipes'}
       .recipe.row
         .recipe_image.col-sm-3
           %img{src: '/assets/Cre.jpg'}
         .recipe_content.col-sm-9
-          .title
-            %a{ ng_href: '#/show?id={{recipe.id}}'} {{recipe.title}}
-          %p  {{recipe.description | cut_max_caracters:true:100:'...'}}
+          .row
+            .col-sm-6.pull-left
+              .title
+                %a{ ng_href: '#/recipe?id={{r.id}}'} {{r.title}}
+            .col-sm-6{ng_show: 'auth'}
+              .wrapper.b-l-d
+                %button.pull-right.btn.btn-default.btn-addon.btn-sm.m-t-n-xs{ng_click: "DeleteRecipe()", :type => "button"}>
+                  %i.fa.fa-trash-o.text-danger>
+                %button.pull-right.btn.btn-default.btn-addon.btn-sm.m-t-n-xs.ri{ng_click: "OpenModalRecipe('Edit',r)", :type => "button"}
+                  %i.fa.fa-pencil-square-o.text-info>
+          .row
+            .col-sm-12
+              %p  {{r.description | cut_max_caracters:true:100:'...'}}
+              .recipe_content.pull-right
+                .username
+                  publié: {{r.created_at | date:" dd/MM/yyyy"}} par {{r.user.name}}
 
-        .recipe_content.pull-right
-          .username
-            publié: {{recipe.created_at | date:" dd/MM/yyyy"}} par {{recipe.username}}

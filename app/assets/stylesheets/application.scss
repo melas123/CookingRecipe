@@ -1,6 +1,8 @@
 //*= require bootstrap/dist/css/bootstrap
 //*= require font-awesome/css/font-awesome
+//*= require toaster
 //*= require_tree .
+
 .spacer{
   margin-top: 100px;
 }
@@ -15,4 +17,11 @@
 .avatar{
   width: 30px;
   margin: 10px 0 10px 10px;
+}
+#ingredient{
+  padding: 10px;
+  background: #eee;
+  margin-right:3px; 
+  display: inline-block;
+  margin:5px;
 }

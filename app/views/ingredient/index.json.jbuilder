@@ -1,3 +1,4 @@
 json.array!(@ingredients) do |i|
-  json.name i.name
+  json.id     i.id
+  json.name   i.name
 end

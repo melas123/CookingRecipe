@@ -1,0 +1,69 @@
+.modal-content
+  / Modal header
+  .modal-header{ng_show: 'action=="Add"'}
+    %button.close{ng_click: "cancel()", :type => "button"} &times;
+    %h2.modal-title Add Recipe
+  .modal-header{ng_show: 'action=="Edit"'}
+    %button.close{ng_click: "cancel()", :type => "button"} &times;
+    %h2.modal-title Edit Recipe
+  / Modal body
+  .modal-body
+    %form.form-horizontal
+      .form-group
+        %label.control-label.col-sm-3 Recipe Title (*)        
+        .col-sm-6
+          %input.form-control{ ng_model: "Recipe.title", :placeholder => "Recipe Title", :type => "text"}
+      .form-group
+        %label.control-label.col-sm-3 Description:
+        .col-sm-6
+          %textarea.form-control{ ng_model: "Recipe.description", :rows => "5"}
+      .form-group
+        %label.control-label.col-sm-3 Recipe Image (*)
+        .col-sm-6
+          %input.form-control{ ng: {file_select: "onFileSelect($files)", model: "image"},"type" => "file"} 
+      .form-group
+        .col-sm-6
+          .form-group
+            %label.control-label.col-sm-6 Select ingredient
+            .col-sm-6
+              %ui_select{ng_model: 'multiselect.ingredient.selected',theme:'bootstrap',reset_search_input:'false'}
+                %ui-select-match{:placeholder => "Select ingredients ..." } {{$select.selected.name}}
+                %ui_select_choices{repeat:'ingredient  in Ingredients | filter:$select.search'}
+                  {{ingredient.name}}
+          .form-group
+            %label.control-label.col-sm-6 Quantity (*)
+            .col-sm-6
+              %input.form-control{ng_model: "quantity","type" => "number", :placeholder => "Quantity"}
+          .form-group
+            %label.control-label.col-sm-6 Measure
+            .col-sm-6
+              %select.form-control{ng: {model: "measure", options: " l.Id as l.Name for l in Measures", change: "ChangeMeasure()"}}
+          .form-group{ng_hide: 'measure=="3"'}
+            %label.control-label.col-sm-6 Unit
+            .col-sm-6
+              %select.form-control{ng: {model: "unit", options: " l.Id as l.Name for l in ChosenMeasure"}}
+          .form-group
+            .col-sm-12
+              %button.btn.btn-default.btn-addon.btn-sm.m-t-n-xs.pull-right{ ng_click: 'AddTolistIngredient(multiselect.ingredient.selected, quantity, measure,unit)' , :type => "button", :aria_label => "Left Align"}
+                %i.fa.fa-plus.text-info>
+                  Add
+        .col-sm-6
+          .form-group{ng_show: "true"}
+            %label.control-label.col-sm-4 Add Ingredient 
+            .col-sm-4
+              %input.form-control{ ng_model: "name", :placeholder => "Name", :type => "text"}
+            .col-sm-1
+              %button.btn.btn-default.btn-addon.btn-sm.m-t-n-xs.pull-right{ ng_click: "AddIngredient(name)" , :type => "button", :aria_label => "Left Align"}
+                %i.fa.fa-plus.text-info>
+          .form-group
+            .col-sm-9
+              %span#ingredient{ng_repeat: 'ing in ListRecipeIngredient'}
+                {{ing.ingredient.name}}
+                %i.fa.fa-times.clickable{ng_click:'deleteIngredientFromList(ing)'} 
+  / Modal footer
+  .modal-footer
+    %button.btn.btn-default{ng_click: "cancel()", :type => "button"} Close
+    %button.btn.btn-default{ng_click: "AddRecipe()", :type => "submit"}
+      %span.glyphicon.glyphicon-save>
+        Save
+        

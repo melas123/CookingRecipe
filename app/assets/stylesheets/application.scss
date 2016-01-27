@@ -1,6 +1,11 @@
 //*= require bootstrap/dist/css/bootstrap
 //*= require font-awesome/css/font-awesome
 //*= require_tree .
+
+@mixin opacity09($op:0.9) {
+  opacity: $op;
+}
+
 .spacer{
   margin-top: 100px;
 }
@@ -9,8 +14,11 @@
 }
 .logo{
   width: 40px;
-  margin-top: -8px;
+  margin-top: -12px;
   margin-right: 20px;
+}
+.logo:hover{
+  @include opacity09(0.8);
 }
 .avatar{
   width: 30px;

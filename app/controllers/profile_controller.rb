@@ -1,5 +1,5 @@
 class ProfileController < ApplicationController
-  before_filter :authenticate_user!, only: [ :create, :update, :destroy ]
+  before_filter :authenticate_user!, only: [ :create, :update, :destroy, :favorite_list ]
   respond_to :json
   def index
     #return recipes's current_user.
@@ -11,7 +11,7 @@ class ProfileController < ApplicationController
   end
   #  get "profile/favorite_list"
   def favorite_list
-    @favorites = User.find(current_user.id).favorites.all
+    @favorites=Recipe.where( id: current_user.favorites.pluck( :recipe_id ) )
   end
   #  post "profile/destroy_favorite"
   def destroy_favorite

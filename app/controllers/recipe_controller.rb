@@ -14,6 +14,10 @@ class RecipeController < ApplicationController
     respond_with( Paginator.pagination_attributes( @recipes ).merge!( recipes:  @recipes ), status: 200 )
   end
 
+  def create_favorite
+    Favorite.create user_id: current_user.id, recipe_id: params[:recipe_id]
+  end
+
   def rate
     @rate = Recipe.find(params[:recipe_id]).calculate_rate_for_recipe
   end
@@ -49,6 +53,8 @@ class RecipeController < ApplicationController
     respond_with @recipe
   end
 
+
+
   private
   def get_recipe
     @recipe = Recipe.where( id: params[ :id ] ).try :first
@@ -58,4 +64,6 @@ class RecipeController < ApplicationController
   def recipe_params
     params.require( :recipe ).permit( :title, :description)
   end
+
+
 end

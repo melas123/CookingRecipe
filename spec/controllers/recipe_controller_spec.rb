@@ -14,6 +14,8 @@ RSpec.describe RecipeController, type: :controller do
         expect( subject.current_user ).to_not eq nil
       end
     end
+
+
     # CRUD Recipe
     #------------------------------------------------
     describe "CRUD" do
@@ -86,6 +88,13 @@ RSpec.describe RecipeController, type: :controller do
             expect( assigns( :recipes )[0] ).to eq Recipe.most_recent.first
           end
         end
+      end
+    end
+    describe "POST #create_favorite" do
+      login_user
+      it "create new Favorite" do
+        post :create_favorite, format: :json, recipe_id: recipe_created.id
+        expect( Favorite.count ).to eq(1)
       end
     end
 end

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   post 'relationship/unfollow'
   get 'relationship/followers/:user_id' => "relationship#followers"
   get 'relationship/following/:user_id' => "relationship#following"
+  get 'relationship/followed_recipes/:user_id' => "relationship#followed_recipes"
 
   resources :image, only: [ :index, :create, :destroy, :update ]
   resources :ingredient, only: [ :index, :create ]

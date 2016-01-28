@@ -16,4 +16,8 @@ class RelationshipController < ApplicationController
   def following
     @following = User.find( params[:user_id] ).following
   end
+
+  def followed_recipes
+    @recipes_followed = User.find( params[:user_id] ).recipes
+  end
 end

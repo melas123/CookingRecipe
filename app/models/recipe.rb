@@ -12,7 +12,6 @@ class Recipe < ActiveRecord::Base
   has_many :ingredient_recipes
   has_many :images
   has_many :favorites, dependent: :destroy
-
   has_many :comments, dependent: :destroy
 
   accepts_nested_attributes_for :images

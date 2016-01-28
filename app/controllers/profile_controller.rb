@@ -11,10 +11,10 @@ class ProfileController < ApplicationController
   end
   #  get "profile/favorite_list"
   def favorite_list
-    @favorites=Recipe.where( id: current_user.favorites.pluck( :recipe_id ) )
+    @favorites = Recipe.where( id: current_user.favorites.pluck( :recipe_id ) )
   end
   #  post "profile/destroy_favorite"
   def destroy_favorite
-    (Favorite.where( id: params[:favorite_id], user_id: current_user.id )).first.destroy
+    Favorite.where( id: params[:favorite_id], user_id: current_user.id ).first.destroy
   end
 end

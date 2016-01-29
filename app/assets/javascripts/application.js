@@ -6,8 +6,8 @@
 //= require angular-route
 //= require angular-ui-bootstrap
 //= require angular-ui-bootstrap-tpls
-//= require angular-ui-select
+//= require ui-select
 //= require bootstrap
-//= require toaster
+//= require AngularJS-toaster/toaster
 //= require angular-animate
 //= require_tree .

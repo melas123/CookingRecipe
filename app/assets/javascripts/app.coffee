@@ -5,3 +5,10 @@
 @cooking = angular.module( 'cookingRecipes',[ 'Devise', 'ngRoute', 'templates',
                                               'ui.bootstrap','ui.select','toaster',
                                               'ngAnimate' ] )
+  .controller('mainCtrl', ($scope, Auth, datacontext) ->
+
+    # get current user
+    Auth.currentUser().then  (user) ->
+      $scope.user = user
+
+  )

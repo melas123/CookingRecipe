@@ -2,9 +2,36 @@
   .row
     .col-sm-3
       %img{ src: "assets/avatar_homme.jpg" }
-    .col-sm-9
-      %h2 {{user.name}}
-      %h3 {{user.email}}
+    .col-sm-5
+      %h2 {{user_profile.name}}
+      %h3 {{user_profile.email}}
+    .col-sm-4
+      .row.follow-btn{ng_if: "user.id != id"}
+        .col-sm-12
+          %button.btn.btn-info.btn-block{ ng:{ click: "createFollow()", show: "!isFollowed" } }
+            %i.fa.fa-plus-circle.fa-lg
+            %span.text-folow-btn Follow
+          %button.btn.btn-default.btn-block{ ng:{ click: "removeFollow()", show: "isFollowed" } }
+            %i.fa.fa-check-circle.fa-lg
+            %span.text-folow-btn Following
+      .row
+        .col-sm-12
+          FOLLOWERS
+          .pull-right
+            (
+            %a{ ng_click: "openWindowsFollowers()" } {{ nbFollowers }}
+            )
+      .row
+        .col-sm-12
+          FOLLOWING
+          .pull-right
+            (
+            %a{ ng_click: "openWindowsFollowers()" } {{ nbFollowing }}
+            )
+
+  .row{ ng_if: "user.id == id" }
+    %tag-following-followers
+
   #recipes
     %div{ ng_repeat: 'recipe in recipes'}
       .recipe.row
@@ -14,6 +41,8 @@
           .title
             %a{ ng_href: '#/show?id={{recipe.id}}'} {{recipe.title}}
           %p  {{recipe.description | cut_max_caracters:true:100:'...'}}
-        .recipe_content.pull-right
-          .username
-            publié: {{recipe.created_at | date:" dd/MM/yyyy"}} par {{recipe.username}}
+          .col-sm-12
+
+            .recipe_content.pull-right
+              .username
+                publié: {{recipe.created_at | date:" dd/MM/yyyy"}}

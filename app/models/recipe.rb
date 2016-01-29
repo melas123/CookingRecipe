@@ -25,7 +25,7 @@ class Recipe < ActiveRecord::Base
   #Override the as_json method to include the user name,ingredient_recipes:
   def as_json(options = {})
     super(options.merge(include: {
-                            user:               { only: [ :email,:id ] },
+                            user: { only: [ :name,:id ] },
                             ingredient_recipes: { only: [:id, :quantity, :ingredient_id, :recipe_id, :mass_unit, :volume_unit, :measure] },
                             ingredients:        { only: [ :name,:id ] },
                             images:             { only: [ :avatar ]}

@@ -1,0 +1,37 @@
+.col-lg-12.col-sm-12.spacer3
+  .btn-pref.btn-group.btn-group-justified.btn-group-lg{"aria-label" => "...", :role => "group"}
+    .btn-group{:role => "group"}
+      %button#following_btn.btn.btn-primary{"data-toggle" => "tab", href: "#following", type: "button", ng_click: "ActiveBtnTag(1)"}
+        %span.glyphicon.glyphicon-user{"aria-hidden" => "true"}
+        .hidden-xs following
+    .btn-group{:role => "group"}
+      %button#followers_btn.btn.btn-default{"data-toggle" => "tab", href: "#followers", type: "button", ng_click: "ActiveBtnTag(2)"}
+        %span.glyphicon.glyphicon-user{"aria-hidden" => "true"}
+        .hidden-xs Followers
+  .well
+    .tab-content
+      #following.tab-pane.fade.in.active
+        .row.user_row{ng_repeat:"follow in following"}
+          .col-sm-2
+            %img{ src: "assets/avatar_homme.jpg", width: "100%" }
+          .col-sm-5
+            %a{ ng_href: '#/profile?id={{follow.id}}'}
+              %b {{follow.name}}
+            %br
+            {{follow.email}}
+            %button.btn.btn-default.btn-sm{ ng_click: "removeFollow(follow.id, $index)" }
+              %i.fa.fa-check-circle.fa-lg
+              Following
+
+      #followers.tab-pane.fade.in
+        .row.user_row{ng_repeat:"follower in followers"}
+          .col-sm-2
+            %img{ src: "assets/avatar_homme.jpg", width: "100%" }
+          .col-sm-5
+            %a{ ng_href: '#/profile?id={{follower.id}}'}
+              %b {{follower.name}}
+            %br
+            {{follower.email}}
+            %button.btn.btn-info.btn-sm{ ng:{ if: "user.id != follower.id", click: "createFollowByFollowerUser(follower.id, $index)"} }
+              %i.fa.fa-plus-circle.fa-lg
+              Follow

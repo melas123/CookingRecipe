@@ -24,9 +24,6 @@ gem 'devise'       # authentification
 gem 'angular-rails-templates'
 gem 'angular_rails_csrf'
 gem 'angular-ui-bootstrap-rails'
-gem 'ng-toaster-rails'
-# angular-ui-select-rails is a asset pipeline friendly version of AngularJS ui-select
-gem 'angular-ui-select-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

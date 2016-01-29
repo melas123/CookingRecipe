@@ -1,17 +1,14 @@
-@cooking.controller 'profileCtrl', ($scope, Auth) ->
-  Auth.currentUser().then  (user) ->
-    $scope.user = user
-    $scope.recipes = [
-      {
-        id:1,
-        title:"recipe 1",
-        description:"SmartOS images come with pkgsrc pre-installed. On other illumos distributions, first install pkgsrc, then you may install the binary package as normal: SmartOS images come with pkgsrc pre-installed. On other illumos distributions, first install pkgsrc, then you may install the binary package as normal:",
-        username:"Mohamed Belaid"
-        },
-      {
-        id:2,
-        title:"recipe 2",
-        description:"distributions, first install pkgsrc, then you may install the binary package as normal: SmartOS images come with pkgsrc pre-installed. On other illumos distributionse binary package as normal:",
-        username:"Doniya Sfaxienne"
-        }
-      ]
+@cooking.controller 'profileCtrl', ($scope, Auth, datacontext, $routeParams, Profile ) ->
+
+  #initialize variables
+  $scope.id = $routeParams.id
+
+  #get all recipes
+  datacontext.getRecipes().success( (data) ->
+    $scope.recipes = data.recipes
+  )
+
+  #get user by id
+  Profile.getUser($scope.id).success( (data) ->
+    $scope.user_profile = data[0]
+  )

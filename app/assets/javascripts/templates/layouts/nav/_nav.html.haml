@@ -1,7 +1,7 @@
 %nav.navbar.navbar-inverse.navbar-fixed-top{ role: "navigation" }
   .container{ ng_controller: 'navCtrl' }
     .navbar-header
-      %button.navbar-toggle.collapsed{ data: {toggle: "collapse", target: "#navbar"}, aria: {expanded: "false", controls: "navbar"} }
+      %button.navbar-toggle.collapsed{ data: { toggle: "collapse", target: "#navbar" }, aria: { expanded: "false", controls: "navbar" } }
         %span.sr-only Toggle navigation
         %span.icon-bar
         %span.icon-bar
@@ -15,8 +15,10 @@
           %a{ href: "#/login" } Connexion
         %li{ ng_hide: "signedIn()" }
           %a{ href: "#/register" } Inscription
+        %li{ng:{show:  "signedIn()" , class: "{active: $route.current.activetab == 'favorite'}"}  }
+          %a{ href: "#/favorite" } Mes Recettes Préférées
         %li{ng:{show:  "signedIn()" , class: "{active: $route.current.activetab == 'profile'}"}  }
-          %a{ href: "#/profile" } {{ user.name }}
+          %a{ href: "#/profile?id={{user.id}}" } {{ user.name }}
         %li{ ng_show: "signedIn()" }
           %img.avatar{src: "assets/avatar_homme.jpg"}
         %li{ ng_show:  "signedIn()" }

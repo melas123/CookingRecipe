@@ -1,0 +1,25 @@
+%div{ ng_controller: "favoriteCtrl" }
+  .row
+    .col-sm-3
+      %img{ src: "assets/avatar_homme.jpg" }
+      %h3.text-center {{user.name}}
+    .col-sm-9
+      #favorites_recipe
+        .line_favorite{ng_if:"favorites.length == 0"}
+          %h3 Désolés !
+          %p Vous n'avez sauvegardé aucune recette dans "Mes préférées".
+        %h2 Mes recettes préférées ({{favorites.length}})
+        %table.table{ng_if:"favorites.length != 0"}
+          %thead
+            %tr
+              %th
+                Recette
+              %th
+                Description
+          %tbody
+            %tr{ ng_repeat: 'fav in favorites'}
+              %td
+                %a.title{ ng_href: '#/show?id={{fav.id}}'} {{fav.title}}
+                %img{src: '/assets/Cre.jpg'}
+              %td
+                {{fav.description}}

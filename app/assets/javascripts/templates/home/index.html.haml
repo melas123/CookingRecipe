@@ -23,7 +23,7 @@
           .row
             .col-sm-6.pull-left
               .title
-                %a{ ng_href: '#/recipe?id={{ recipe.id }}'} {{ recipe.title }}
+                %a{ ng_href: '#/show?id={{ recipe.id }}'} {{ recipe.title }}
             .col-sm-6{ ng_show: 'isAuthenticated' }
               .wrapper.b-l-d
                 %button.pull-right.btn.btn-default.btn-addon.btn-sm.m-t-n-xs{ ng_click: "deleteRecipe()" }

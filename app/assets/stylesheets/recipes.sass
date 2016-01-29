@@ -11,6 +11,9 @@
       img
         width: 100%
         border-radius: .3rem .3rem 0 0
+    .recipe_content
+      .username
+        color: #969696
 
 #search
   position: relative
@@ -45,6 +48,25 @@
   .recipe_image_description
     float: left
     margin-right: 5%
+  #favorite_icon
+    top: 10px
+    right: 24px
+    width: 40px
+    height: 40px
+    position: absolute
+    border-radius: 50%
+    background-image: url(white-heart-md.png)
+    z-index: 1
+    background-size: 70%
+    background-repeat: no-repeat
+    background-position: 6px .9rem
+    cursor: pointer
+  #favorite:hover
+    background-color: rgba(0,0,0,0.7)
+  .isFavorite
+    background-color: rgba(124,252,0,0.6)
+  .noFavorite
+    background-color: rgba(0,0,0,0.5)
   h1
     margin: 0
     color: #333233

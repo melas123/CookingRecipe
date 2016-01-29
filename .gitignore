@@ -20,3 +20,6 @@
 bower_components
 node_modules/
 .project
+
+db/schema.rb
+.byebug_history

@@ -22,6 +22,7 @@ class RecipeController < ApplicationController
   def create
     @userRecipe = Recipe.new( recipe_params.merge( user_id: current_user.id ) )
     @userRecipe.save
+    
     respond_with( @userRecipe )
   end
 
@@ -55,6 +56,6 @@ class RecipeController < ApplicationController
 
   private
   def recipe_params
-    params.require( :recipe ).permit( :title, :description )
+    params.require( :recipe ).permit( :title, :description)
   end
 end

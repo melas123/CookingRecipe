@@ -3,17 +3,21 @@
   #initialize variables
   $scope.id = $routeParams.id    #user_id in params
 
-  # get number followers for current user
-  Profile.getNbFollowers($scope.id).success (data) ->
-    $scope.nbFollowers = data
+  #check if user is connected or not
+  $scope.isAuthenticated = Auth.isAuthenticated()
 
-  # check that user is followed by current user or not
-  Profile.isFollowed($scope.id).success (data) ->
-    $scope.isFollowed = data
+  if $scope.isAuthenticated
+    # get number followers for current user
+    Profile.getNbFollowers($scope.id).success (data) ->
+      $scope.nbFollowers = data
 
-  # get number following for current user
-  Profile.getNbFollowing($scope.id).success (data) ->
-    $scope.nbFollowing = data
+    # check that user is followed by current user or not
+    Profile.isFollowed($scope.id).success (data) ->
+      $scope.isFollowed = data
+
+    # get number following for current user
+    Profile.getNbFollowing($scope.id).success (data) ->
+      $scope.nbFollowing = data
 
   # create new follow for user
   $scope.createFollow = ->

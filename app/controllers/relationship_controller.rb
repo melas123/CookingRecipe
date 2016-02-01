@@ -1,5 +1,9 @@
 class RelationshipController < ApplicationController
 
+
+  #only authenticated users can create or update re
+  before_filter :authenticate_user!, only: [ :create, :update, :destroy, :isFollowed ]
+
   def follow
     if params[:followed_id] != current_user.id
       Relationship.create follower_id: current_user.id, followed_id: params[:followed_id]

@@ -5,8 +5,8 @@
     .col-sm-5
       %h2 {{user_profile.name}}
       %h3 {{user_profile.email}}
-    .col-sm-4
-      .row.follow-btn{ng_if: "user.id != id"}
+    .col-sm-4{ ng_if: "isAuthenticated" }
+      .row.follow-btn{ng_show: "user.id != id"}
         .col-sm-12
           %button.btn.btn-info.btn-block{ ng:{ click: "createFollow()", show: "!isFollowed" } }
             %i.fa.fa-plus-circle.fa-lg
@@ -29,7 +29,8 @@
             %a{ ng_click: "openWindowsFollowers()" } {{ nbFollowing }}
             )
 
-  .row{ ng_if: "user.id == id" }
+  / directive tags followers and following
+  .row{ ng_if: "user.id == id && isAuthenticated" }
     %tag-following-followers
 
   #recipes

@@ -8,8 +8,8 @@ class IngredientRecipeController < ApplicationController
                                                     mass_unit:          attributes["mass_unit"],
                                                     volume_unit:        attributes["volume_unit"],
                                                     measure:            attributes["measure"])
-    end  
-      
+    end
+
   end
 
   def index
@@ -22,7 +22,9 @@ class IngredientRecipeController < ApplicationController
 
 
   def destroy
-    IngredientRecipe.find(params[:id]).destroy
+
+    @ingredientrecipe = IngredientRecipe.find(params[:id])
+    @ingredientrecipe.destroy
   end
 
 end

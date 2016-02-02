@@ -5,7 +5,7 @@
   .row{ ng_show: 'isAuthenticated' }
     .col-sm-12
       / Trigger the modal with a button
-      %button.btn.btn-default.btn-addon.btn-sm.m-t-n-xs.pull-right{ ng_click: "openModalRecipe()" }
+      %button.btn.btn-default.btn-addon.btn-sm.m-t-n-xs.pull-right{ ng_click: "openModalCreateRecipe()" }
         %i.fa.fa-plus.text-info
           Recette
 
@@ -29,7 +29,7 @@
               .wrapper.b-l-d
                 %button.pull-right.btn.btn-default.btn-addon.btn-sm.m-t-n-xs{ ng_click: "deleteRecipe()" }
                   %i.fa.fa-trash-o.text-danger
-                %button.pull-right.btn.btn-default.btn-addon.btn-sm.m-t-n-xs.ri{ ng_click: "openModalRecipe(recipe)" }
+                %button.pull-right.btn.btn-default.btn-addon.btn-sm.m-t-n-xs.ri{ ng_click: "openModalEditRecipe(recipe)" }
                   %i.fa.fa-pencil-square-o.text-info
           .row
             .col-sm-12

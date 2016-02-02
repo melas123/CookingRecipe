@@ -1,7 +1,7 @@
 @cooking.controller 'homeCtrl', ($scope, datacontext, GetModal, Notification, $rootScope, Auth) ->
- 
-  $scope.isAuthenticated = Auth.isAuthenticated() 
- 
+
+  $scope.isAuthenticated = Auth.isAuthenticated()
+
   datacontext.getRecipes().success( (data) ->
     $rootScope.recipes = data.recipes
   ).error (data, status) ->
@@ -16,4 +16,3 @@
     datacontext.getRecipes().success (data) ->
       $rootScope.recipes = data.recipes
 
- 

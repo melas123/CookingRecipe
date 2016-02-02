@@ -9,7 +9,6 @@ gem 'sqlite3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 gem 'compass-rails'
-
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -21,9 +20,14 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'haml-rails'
 gem 'coffee-rails'
 gem 'devise'       # authentification
-gem 'angular-rails-templates'
+gem 'angular-rails-templates', '0.1.4'
 gem 'angular_rails_csrf'
 gem 'angular-ui-bootstrap-rails'
+
+
+# Upload images
+gem 'carrierwave'
+gem 'rmagick', '~> 2.15', '>= 2.15.4'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

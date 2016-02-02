@@ -46,7 +46,7 @@ class RecipeController < ApplicationController
   #Show recipe with given :id
   #GET recipes/:id.json
   def show
-    respond_with @recipe
+  render json: @recipe
   end
 
   private
@@ -58,4 +58,5 @@ class RecipeController < ApplicationController
   def recipe_params
     params.require( :recipe ).permit( :title, :description)
   end
+
 end

@@ -35,15 +35,5 @@
 
   #recipes
     %div{ ng_repeat: 'recipe in recipes'}
-      .recipe.row
-        .recipe_image.col-sm-3
-          %img{src: '/assets/Cre.jpg'}
-        .recipe_content.col-sm-9
-          .title
-            %a{ ng_href: '#/show?id={{recipe.id}}'} {{recipe.title}}
-          %p  {{recipe.description | cut_max_caracters:true:100:'...'}}
-          .col-sm-12
-
-            .recipe_content.pull-right
-              .username
-                publié: {{recipe.created_at | date:" dd/MM/yyyy"}}
+      /recipe block
+      %recipe-directive{ ng_model:"recipe" }

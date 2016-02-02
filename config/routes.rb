@@ -20,13 +20,11 @@ Rails.application.routes.draw do
   resources :image, only: [ :index, :create, :destroy, :update ]
   resources :ingredient, only: [ :index, :create ]
   resources :ingredient_recipe
-<<<<<<< HEAD
-  resources :recipe , only: [ :index,:show,:update,:create,:destroy ]
-=======
   resources :recipe , only: [:index,:show,:update,:create,:destroy,:create_favorite]
   post 'recipe/create_favorite' => "recipe#create_favorite"
->>>>>>> FIX mark recipes as favorites
-  resources :comments
+  resources :recipe , only: [:index,:show,:update,:create,:destroy,:create_favorite] do
+    resources :comments
+  end
   resources :rates
   devise_for :users
   root to: 'application#angular'

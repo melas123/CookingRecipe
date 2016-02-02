@@ -7,7 +7,7 @@
       .clearfix
         .recipe_image_description
           #favorite_icon{ ng:{ click:"createOrDelete()",
-          class: "{ noFavorite: !isFavorite, isFavorite: isFavorite }" } }
+          class: "{ noFavorite: !isFavorite, isFavorite: isFavorite }", if: "isAuthenticated" } }
           %img{ src: '/assets/Cre.jpg' }
           .description
             {{recipe.description}}
@@ -15,13 +15,27 @@
       %ul
         %li{ ng_repeat: 'ingridient in ingridients' }
           {{ingridient.name}}
-  .row.text-center
-    %h2 Commentaires(0)
-    %hr
-  .row
-    .col-sm-3
-      %img.logo{ src: "assets/avatar_homme.jpg" }
-      {{user.name}}
-    .col-sm-9
-      %textarea.form-control{ placeholder:"commentaire ..." }
-  .spacer2
+  #comments
+    .row.text-center
+      %h2 Commentaires({{ comments.length }})
+      %hr
+    .row{ng_if: "isAuthenticated"}
+      .col-sm-3
+        %a{ ng_href: '#/profile?id={{ comment.user_id }}' }
+          %img.logo{ src: "assets/avatar_homme.jpg" }
+        %a{ ng_href: '#/profile?id={{ comment.user_id }}' } {{user.name}}
+      .col-sm-9
+        %form.form-horizontal{name:"commentForm" }
+          %textarea.form-control{ placeholder:"commentaire ...", ng:{ model: "new_comment"}, required:"true" }
+          %br
+          %button.btn.btn-default{ ng_click: "addComment(new_comment)", ng_disabled:"commentForm.$invalid" } Commenter
+    .row.spacer3{ ng_repeat: "comment in comments" }
+      .col-sm-1
+        %a{ ng_href: '#/profile?id={{ comment.user_id }}' }
+          %img.img_comment{ src: "assets/avatar_homme.jpg" }
+      .col-sm-11
+        %a{ ng_href: '#/profile?id={{ comment.user_id }}' } {{ comment.name }}
+        %span {{ comment.created_at | fromNow }}
+        %br
+        {{ comment.text }}
+    .spacer2

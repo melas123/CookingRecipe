@@ -1,4 +1,4 @@
-@cooking.directive 'tagFollowingFollowers',(Profile)->
+@cooking.directive 'tagFollowingFollowers',(Profile,$log)->
   templateUrl: 'assets/templates/profile/tag_following_followers.html.haml'
   restrict: 'E'
   link: (scope, element) ->
@@ -18,10 +18,9 @@
 
     # remove a follow
     $scope.removeFollow = (id, index) ->
-      Profile.removeFollow(followed_id : id).success( (data) ->
-        $scope.following.splice(index,1)
-        $('#followers button:nth('+index+')').css('display','block')
-      )
+      Profile.removeFollow(followed_id : id)
+      $scope.following.splice(index,1)
+      $('#followers button:nth('+index+')').css('display','block')
 
     #switch class button tag
     $scope.ActiveBtnTag = (nb) ->
@@ -38,7 +37,21 @@
     Profile.getNbFollowingByUserId($scope.id).success( (data) ->
       $scope.following = data
     )
+
+    #check if user is in followed or not
+    $scope.isFollowed = (id, index)->
+      $scope.response = false
+      Profile.isFollowed(id).success (data) ->
+        $scope.response = data
+        if $scope.response
+          $('#followers button:nth('+index+')').css('display','none')
+        else
+          $('#followers button:nth('+index+')').css('display','block')
+
     # get followers users by user id
     Profile.getNbFollowersByUserId($scope.id).success( (data) ->
       $scope.followers = data
+      for follow, index in $scope.followers
+        $scope.isFollowed( follow.id, index )
+
     )

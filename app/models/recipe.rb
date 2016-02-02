@@ -3,12 +3,12 @@ class Recipe < ActiveRecord::Base
   validates  :title, :description, presence: true
 
   belongs_to :user
-  has_many   :ingredients, through: :ingredient_recipes
-  has_many   :ingredient_recipes
-  has_many   :images,    dependent: :destroy
-  has_many   :favorites, dependent: :destroy
-  has_many   :comments,  dependent: :destroy
-  has_many   :rates
+
+  has_many :ingredients, through: :ingredient_recipes
+  has_many :ingredient_recipes
+  has_many :images
+  has_many :favorites, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   accepts_nested_attributes_for :images
 

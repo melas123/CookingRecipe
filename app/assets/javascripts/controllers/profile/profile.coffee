@@ -21,14 +21,14 @@
 
   # create new follow for user
   $scope.createFollow = ->
-    Profile.createFollow(followed_id : $scope.id).success( (data) ->
-      $scope.isFollowed = true
-    )
+    Profile.createFollow(followed_id : $scope.id)
+    $scope.isFollowed = true
+
   # remove a follow
   $scope.removeFollow = () ->
-    Profile.removeFollow(followed_id : $scope.id).success( (data) ->
-      $scope.isFollowed = false
-    )
+    Profile.removeFollow(followed_id : $scope.id)
+    $scope.isFollowed = false
+
   #get user by id
   Profile.getUser($scope.id).success( (data) ->
     $scope.user_profile = data[0]

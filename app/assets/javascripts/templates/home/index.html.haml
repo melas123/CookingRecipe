@@ -17,24 +17,5 @@
 
   #recipes
     %div{ ng_repeat: 'recipe in recipes'}
-      .recipe.row
-        .recipe_image.col-sm-3
-          %img{ ng:{ src: "{{ recipe.images[0].avatar.thumb.url }}" }, type: "file" }
-        .recipe_content.col-sm-9
-          .row
-            .col-sm-6.pull-left
-              .title
-                %a{ ng_href: '#/show?id={{ recipe.id }}'} {{ recipe.title }}
-            .col-sm-6{ ng_show: 'isAuthenticated' }
-              .wrapper.b-l-d
-                %button.pull-right.btn.btn-default.btn-addon.btn-sm.m-t-n-xs{ ng_click: "deleteRecipe()" }
-                  %i.fa.fa-trash-o.text-danger
-                %button.pull-right.btn.btn-default.btn-addon.btn-sm.m-t-n-xs.ri{ ng_click: "openModalEditRecipe(recipe)" }
-                  %i.fa.fa-pencil-square-o.text-info
-          .row
-            .col-sm-12
-              %p  {{ recipe.description | cut_max_caracters:true:100:'...' }}
-              .recipe_content.pull-right
-                .username
-                  publié: {{ recipe.created_at | date:"dd/MM/yyyy" }} par
-                  %a{ ng_href: '#/profile?id={{ recipe.user.id }}'} {{ recipe.user.name }}
+      /recipe block
+      %recipe-directive{ ng_model:"recipe" }

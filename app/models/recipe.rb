@@ -16,6 +16,11 @@ class Recipe < ActiveRecord::Base
 
   accepts_nested_attributes_for :images
 
+  scope :favorites_user, ->( user_id ){ where( id: User.find( user_id ).favorites.pluck( :recipe_id ) )}
+  scope :most_recent, -> { order( created_at: :desc ) }
+  has_many :rates
+ using scope for user favorites
+
   scope :most_recent, -> { order( created_at: :desc ) }
 
   def calculate_rate_for_recipe ()

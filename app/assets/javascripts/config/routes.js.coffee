@@ -20,6 +20,11 @@
     templateUrl: 'assets/templates/profile/profile.html'
     activetab: 'profile'
 
+  .when "/favorite",
+    controller:  'favoriteCtrl'
+    templateUrl: 'assets/templates/profile/favorite.html'
+    activetab: 'favorite'
+
   .when "/show",
     controller:  'showCtrl'
     templateUrl: 'assets/templates/home/show.html'

@@ -26,6 +26,7 @@
     "AngularJS-Toaster": "toaster#~1.0.0",
     "ui-select": "angular-ui-select#~0.14.2",
     "angular-file-upload": "~2.2.0",
-    "angular-bootstrap": "~1.1.1"
+    "angular-bootstrap": "~1.1.1",
+    "moment": "~2.11.1"
   }
 }

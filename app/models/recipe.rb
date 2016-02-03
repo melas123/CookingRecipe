@@ -3,12 +3,12 @@ class Recipe < ActiveRecord::Base
   validates  :title, :description, presence: true
 
   belongs_to :user
-  has_many   :ingredients, through: :ingredient_recipes
-  has_many   :ingredient_recipes
-  has_many   :images,    dependent: :destroy
-  has_many   :favorites, dependent: :destroy
-  has_many   :comments,  dependent: :destroy
-  has_many   :rates
+
+  has_many :ingredients, through: :ingredient_recipes
+  has_many :ingredient_recipes
+  has_many :images
+  has_many :favorites, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   accepts_nested_attributes_for :images
 
@@ -25,7 +25,7 @@ class Recipe < ActiveRecord::Base
   #Override the as_json method to include the user name,ingredient_recipes:
   def as_json(options = {})
     super(options.merge(include: {
-                            user:               { only: [ :email,:id ] },
+                            user: { only: [ :name,:id ] },
                             ingredient_recipes: { only: [:id, :quantity, :ingredient_id, :recipe_id, :mass_unit, :volume_unit, :measure] },
                             ingredients:        { only: [ :name,:id ] },
                             images:             { only: [ :avatar ]}

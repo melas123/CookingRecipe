@@ -8,10 +8,16 @@ class RecipeController < ApplicationController
 
   #Show all recipes
   def index
-    #return all recipes sorted by date of publication.
-    @recipes = Recipe.most_recent.paginate( page: params[ :page ], per_page: 10 )
-    #byebug
-    respond_with( Paginator.pagination_attributes( @recipes ).merge!( recipes:  @recipes ), status: 200 )
+    if ( query = params[ :search ] ) && ( page = params[ :page ] )
+      #filter recipes by title , description and ingredients  sorted by date of publication.(call search scope of Recipe model)
+      @recipes = Recipe.search( query ).most_recent( page )
+      respond_with( Paginator.pagination_attributes( @recipes ).merge!( recipes:  @recipes ), status: 200 )
+    else
+      #return all recipes sorted by date of publication.
+      @recipes = Recipe.most_recent( params[ :page ] )
+      #byebug
+      respond_with( Paginator.pagination_attributes( @recipes ).merge!( recipes:  @recipes ), status: 200 )
+    end
   end
 
   def rate

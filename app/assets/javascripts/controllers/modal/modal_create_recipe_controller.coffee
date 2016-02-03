@@ -1,4 +1,4 @@
-@cooking.controller 'ModalCreateRecipeController', ($scope, $rootScope, $modalInstance, datacontext, Notification, volumes, weights, measures,FileUploader) ->
+@cooking.controller 'ModalCreateRecipeController', ($scope, $rootScope, $uibModalInstance, datacontext, Notification, volumes, weights, measures,FileUploader) ->
 
   $scope.name =                 ''
   $scope.selectedIngredient =   []
@@ -11,8 +11,8 @@
   $scope.chosenMeasure =        $scope.weights
   $scope.measure =              $scope.measures[0].id
   $scope.unit =                 $scope.weights[0].id
-  
-  
+
+
   #upload Image
   csrf_token =         document.querySelector('meta[name="csrf-token"]').getAttribute('content');
   uploader   =         $scope.uploader = new FileUploader(
@@ -21,7 +21,6 @@
     headers:           { 'X-CSRF-TOKEN': csrf_token,'request': 'application/json' },
     withCredentials:   true )
   $scope.loadUploader = true
-
 
   $scope.modalTitle  = 'Ajouter une recette'
   $scope.recipe =
@@ -33,7 +32,6 @@
   ).error ( data, status ) ->
     alert 'Error on getting ingredients'
 
-
   $scope.changeMeasure = ->
     if $scope.measure == 1
       $scope.chosenMeasure =   $scope.weights
@@ -42,14 +40,12 @@
       $scope.chosenMeasure =   $scope.volumes
       $scope.unit =            $scope.volumes[0].id
 
-
   # FILTERS for the images
   uploader.filters.push
     name: 'imageFilter'
     fn: (item, options) ->
       type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|'
       '|jpg|png|jpeg|bmp|gif|'.indexOf(type) != -1
-
 
   $scope.addTolistIngredient = ( ingred, quantity, measure,unit ) ->
     if quantity == "" or quantity == undefined  or ingred == undefined
@@ -70,7 +66,6 @@
             unit :        unit
             measure :     measure
           $scope.listRecipeIngredient.push( obj )
-
 
   $scope.addIngredient = ->
     if $scope.name == '' or $scope.name == undefined
@@ -129,11 +124,9 @@
           $rootScope.$broadcast 'ReloadRecipe', 'Some data'
           $scope.cancel())
 
-
   $scope.deleteIngredientFromList = ( obj ) ->
     index = $scope.listRecipeIngredient.indexOf( obj )
     $scope.listRecipeIngredient.splice( index, 1 )
 
-
   $scope.cancel = ->
-    $modalInstance.dismiss 'cancel'
+    $uibModalInstance.dismiss 'cancel'

@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Image, type: :model do
-  it "has a valide url and title" do
-  	expect(build(:image_with_valid_url)).to be_valid
+  it "has a valide avatar and title" do
+  	expect(build(:image_with_valid_avatar)).to be_valid
   end
 
-  it "has not a valide url" do
-  	expect(build(:image_with_invalid_url)).to_not be_valid
+  it "has not a valide avatar" do
+  	expect(build(:image_with_invalid_avatar)).to_not be_valid
   end
 
   it "has no recipe" do
